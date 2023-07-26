@@ -8,3 +8,14 @@ services:
     #   - PORT=3000
     env_file:
       - ./.env
+
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=Ashjag
+      - MONGO_INITDB_ROOT_PASSWORD=Pass@123
+    volumes:
+      - mongo-db:/data/db
+      
+volumes:
+  mongo-db:
