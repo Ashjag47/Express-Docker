@@ -9,5 +9,14 @@ services:
       - ./:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      NODE_ENV: development
+      MONGO_USER: Ashjag
+      MONGO_PASSWORD: Pass_123
     command: npm run dev
+    depends_on:
+      - mongo
+    
+  mongo:
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: Ashjag
+      MONGO_INITDB_ROOT_PASSWORD: Pass_123
