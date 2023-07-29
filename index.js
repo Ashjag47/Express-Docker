@@ -56,5 +56,5 @@ app.use(session({
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/posts', postRouter);
 
-app.listen(port, () => console.log(`Example app listening on http://localhost:${port}`));
+app.listen(port, () => console.log(`Example app listening on express-app:${port}`));
 
