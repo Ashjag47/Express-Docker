@@ -1,3 +1,4 @@
+const { json } = require("express")
 const User = require("../models/userModel")
 const bcrypt = require("bcryptjs")
 
@@ -18,6 +19,7 @@ const login = async (req, res, next) => {
                 message: "Incorrect password"
             })
         }
+        req.session.user = user
         res.status(200).json({
             status: "success"
         })
@@ -25,7 +27,8 @@ const login = async (req, res, next) => {
     }
     catch(err) {
         res.status(400).json({
-            status: "fail"
+            status: "fail",
+            message: err.message
         })
     }
 }
@@ -41,6 +44,7 @@ const signUp = async (req, res, next) => {
             password: hashedPassword
         }
         const newUser = await User.create(body)
+        req.session.user = newUser
         res.status(201).json({
             status: "success",
             data: {
@@ -48,8 +52,16 @@ const signUp = async (req, res, next) => {
             }
         })
     } catch (err) {
+        if (err.code === 11000) {
+            return res.status(400).json({
+                status: "fail",
+                message: "Duplicate key error",
+                value: err.keyValue
+            })
+        }
         res.status(400).json({
-            status: "fail"
+            status: "fail",
+            message: err.message
         })
     }
 }
