@@ -41,6 +41,7 @@ connnectWithRetry();
 
 const port = process.env.PORT || 3000;
 
+app.enable('trust proxy');
 app.use(session({
     store: redisStore,
     secret: SESSION_SECRET,

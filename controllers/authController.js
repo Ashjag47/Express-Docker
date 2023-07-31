@@ -1,9 +1,11 @@
 const { json } = require("express")
 const User = require("../models/userModel")
 const bcrypt = require("bcryptjs")
+const os = require('os');
 
 const login = async (req, res, next) => {
     const { username, password } = req.body
+    console.log(os.hostname());
     try{
         const user = await User.findOne({username})
         if(!user) {
@@ -35,6 +37,7 @@ const login = async (req, res, next) => {
 
 const signUp = async (req, res, next) => {
     const { name, username, email, password } = req.body
+    console.log(os.hostname());
     try {
         const hashedPassword = await bcrypt.hash(password, 12)
         const body = {
