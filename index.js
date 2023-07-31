@@ -6,6 +6,8 @@ const session = require('express-session');
 const {createClient} = require('redis');
 const RedisStore = require('connect-redis').default;
 
+const cors = require('cors');
+
 let redisClient = createClient({
     url: `redis://${REDIS_URL}:${REDIS_PORT}`,
 });
@@ -41,6 +43,7 @@ connnectWithRetry();
 
 const port = process.env.PORT || 3000;
 
+app.use(cors({}));
 app.enable('trust proxy');
 app.use(session({
     store: redisStore,
